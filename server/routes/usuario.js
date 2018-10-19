@@ -41,12 +41,6 @@ app.get('/usuario', function(req, res) {
             })
 
         })
-
-
-
-
-
-
 })
 
 app.post('/usuario', function(req, res) {
@@ -146,9 +140,6 @@ app.delete('/usuario/:id', function(req, res) {
         });
 
     });
-
-
-
 })
 
 module.exports = app;
