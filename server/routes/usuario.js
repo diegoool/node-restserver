@@ -1,12 +1,14 @@
 const express = require('express');
 const Usuario = require('../models/usuario');
 
+const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
+
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 const app = express();
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', verificaToken, (req, res) => {
 
     // si viene el parametro desde o inicia de 0
     let desde = req.query.desde || 0;
@@ -43,7 +45,7 @@ app.get('/usuario', function(req, res) {
         })
 })
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     let body = req.body;
 
@@ -77,7 +79,7 @@ app.post('/usuario', function(req, res) {
 
 })
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     let id = req.params.id;
     //Arreglo con los elemntos que SI se puede actualizar
@@ -104,7 +106,7 @@ app.put('/usuario/:id', function(req, res) {
 
 })
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     let id = req.params.id;
 
